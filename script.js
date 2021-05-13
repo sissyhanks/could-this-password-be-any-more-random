@@ -1,20 +1,36 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
-// number of characters user requests for password from lengthInput prompt window that returns a number
-var length = "";
+// number of characters user requests for password from prompt window that returns a number
+var length =  Number(window.prompt("How many characters long would you like your password to be? Please enter a number between 8 and 128.", ""));
+
+if (length >= 8 && length <= 128)
+      {
+        console.log("this works");
+      }
+else {
+  while (!(length >= 8 && length <= 128))
+    {
+      length = Number(window.prompt("You must enter a number between 8 and 128 to continue.", ""));
+    }
+}
+
+console.log(length);
+
 
 /* 
 *?* should i make this an object named parameters *?*
 password parameters as selected by user from varInput conformation windows that return booleans 
 */
-var lower = "";
-var upper = "";
-var number = "";
-var symbol = "";
+var lower = Boolean(window.confirm("LOWERCASE LETTERS Would you like your password to include lowercase letters? Click OK to include lower case letters in your password. Click Cancel to create a password without lower case letters."));
+var upper = Boolean(window.confirm("UPPERCASE LETTERS Would you like your password to include uppercase letters? Click OK to include uppercase letters in your password. Click Cancel to create a password without uppercase letters."));
+var number = Boolean(window.confirm("NUMBERS Would you like your password to include numbers? Click OK to include numbers in your password. Click Cancel to create a password without numbers."));
+var symbol = Boolean(window.confirm("SPECIAL CHARACTERS Would you like your password to include special characters? Click OK to include special characters in your password. Click Cancel to create a password without special characters."));
+
+// parameters = function ()
 
 // number of true (affirmative) responses to the varInput confirmation windows
-var count = "";
+var count = 0;
 
 /*
 *?* should i make this an object named parameterCharacterChoices *?*
@@ -54,7 +70,7 @@ var passwordReturn = [];
 
 */
 
-// TODO create prompt and confirmation windows to gather password parameters from user
+// DONE create prompt and confirmation windows to gather password parameters from user
 
 
 /*
