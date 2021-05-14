@@ -1,128 +1,203 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
-/*
-arrays of characters to randomly grab from 
-I used the method Array.from(); to generate an array from strings of characters that i then copied from the console log
-var string = "string of characters to turn into an array";
-console.log(Array.from(string));
-*/
-var lowerCharacters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-var upperCharacters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-var numberCharacters = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
-var specialCharacters = ["!", "#", "$", "%", "&", "'", "", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "`", "{", "|", "}", "~",  "\"" ];
-
-
-// array of each single character returned after each true paramter choice
-var initialCharacterReturn = [];
-
-// array of all values from character arrays that correspond to true paramter choices
-var remainderCharacterReturn = [];
-
-// random array of remainderCharacterReturn items that is length.length - count characters long
-var randomRemainderReturn = [];
-
-// random combination of initialCharacterReturn and randomRemainderReturn array items
-var passwordReturn =[]
-
-// number of characters user requests for password from prompt window that returns a number
-var length =  Number(window.prompt("How many characters long would you like your password to be? Please enter a number between 8 and 128.", ""));
-
-if (length >= 8 && length <= 128)
-      {
-        console.log("length works");
-      }
-else {
-  while (!(length >= 8 && length <= 128))
-    {
-      length = Number(window.prompt("You must enter a number between 8 and 128 to continue.", ""));
-    }
-}
-
-console.log(length);
-
-var initialLowerCharacter = lowerCharacters[Math.floor(Math.random() * lowerCharacters.length)];
-
-// number of true (affirmative) responses to the varInput confirmation windows
+// number of true (affirmative) responses to the criteria confirmation windows
 var count = 0;
 
-/* 
-password parameters as selected by user from varInput conformation windows that return booleans 
-*/
-var lower = Boolean(window.confirm("LOWERCASE LETTERS \nWould you like your password to include lowercase letters? \nClick OK to include lower case letters in your password. \nClick Cancel to create a password without lower case letters."));
+// arrays built from single characters returned from affirmative criteria confirmation and all of the characters included in affirmative criteria choices
+var lockedCriteriaCharacters = [];
+var allCriteriaCharacters = [];
 
-if (lower === true){
-  var initialLowerCharacter = lowerCharacters[Math.floor(Math.random() * lowerCharacters.length)];
-  (count++); console.log(initialLowerCharacter); initialCharacterReturn.push(initialLowerCharacter);
-  remainderCharacterReturn = lowerCharacters.concat(remainderCharacterReturn);
+// number of characters user requests for password from prompt window that returns a number
+let lengthEntry = window.prompt("How many characters long would you like your password to be? Please enter a number between 8 and 128.");
+
+var length = lengthEntry;
+
+// while condition runs until a number between 8 - 128 is returned
+if (length >= 8 && length <= 128){
+  console.log("length works");
+}
+else {
+  while (!(length >= 8 && length <= 128)){
+    length = Number(window.prompt("You must enter a number between 8 and 128 to continue.", ""));
+  }
 }
 
+// password character type criteria confirmation windows
+let lowerChoice = window.confirm("LOWERCASE LETTERS \nWould you like your password to include lowercase letters? \nClick OK to include lower case letters in your password. \nClick Cancel to create a password without lower case letters.");
 
-var upper = Boolean(window.confirm("UPPERCASE LETTERS \nWould you like your password to include uppercase letters? \nClick OK to include uppercase letters in your password. \nClick Cancel to create a password without uppercase letters."));
+let upperChoice = window.confirm("UPPERCASE LETTERS \nWould you like your password to include uppercase letters? \nClick OK to include uppercase letters in your password. \nClick Cancel to create a password without uppercase letters.");
 
-if (upper === true){
-  var initialUpperCharacter = upperCharacters[Math.floor(Math.random() * upperCharacters.length)];
-  (count++); console.log(initialUpperCharacter); initialCharacterReturn.push(initialUpperCharacter);
-  remainderCharacterReturn = upperCharacters.concat(remainderCharacterReturn); 
-}
+let numberChoice = window.confirm("NUMBERS \nWould you like your password to include numbers? \nClick OK to include numbers in your password. \nClick Cancel to create a password without numbers.");
 
+let specialChoice = window.confirm("SPECIAL CHARACTERS \nWould you like your password to include special characters? \nClick OK to include special characters in your password. \nClick Cancel to create a password without special characters.");
 
-var number = Boolean(window.confirm("NUMBERS \nWould you like your password to include numbers? \nClick OK to include numbers in your password. \nClick Cancel to create a password without numbers."));
+// objects corresponding to individual character type criteria choices 
+var lower ={
+  criteria: lowerChoice,
+	characters: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+	criteriaCharacter: [],
 
-if (number === true){
-  var initialNumberCharacter = numberCharacters[Math.floor(Math.random() * numberCharacters.length)];
-  (count++); console.log(initialNumberCharacter); initialCharacterReturn.push(initialNumberCharacter); remainderCharacterReturn = numberCharacters.concat(remainderCharacterReturn);
-}
-
-
-var symbol = Boolean(window.confirm("SPECIAL CHARACTERS \nWould you like your password to include special characters? \nClick OK to include special characters in your password. \nClick Cancel to create a password without special characters."));
-
-if (symbol === true){
-  var initialSpecialCharacter = specialCharacters[Math.floor(Math.random()) * specialCharacters.length]; (count++); console.log(initialSpecialCharacter); initialCharacterReturn.push(initialSpecialCharacter); remainderCharacterReturn = specialCharacters.concat(remainderCharacterReturn);
-}
-
-
-console.log(remainderCharacterReturn);
-console.log(initialCharacterReturn);
-console.log(count);
-
-
-
-
-
-
-/*
--------------------------------------------------------------------------
-------------------------- OPERATIONAL CODE BELOW ------------------------
--------------------------------------------------------------------------
-
-*/
-
-// DONE create prompt and confirmation windows to gather password parameters from user
-
-
-/*
-TODO for each confirmation prompt
-  ** count true returns
-  ** for each true return generate 1 random character from corresponding character list and add it to the initialCharacterReturn array
-  ** generate paramterCharacters array (an array made up of all items from array lists corresponding to true returns)
-  ** generate remainderCharacterReturn (an array made up of all items from array lists corresponding to true returns)
-*/
-
-/*
-TODO random generation
-  ** find remainderLength by subtracting count from length 
-    ** generate remainderLength number of random characters from paramterCharacters array
+  increaseCount: function(){
+    if (this.criteria === true){
+      (count++);
+    }
+  },
   
-    ** randomly combine initialCharacterReturn and remainderCharacterReturn arrays into passwordReturn
+  pickCriteriaCharacter: function(){
+    if (this.criteria === true){
+      this.criteriaCharacter = this.characters[Math.floor(Math.random() * this.characters.length)];
+    }
+  },
+  
+  lockInCriteriaCharacter: function(){
+    if (this.criteria === true){
+      lockedCriteriaCharacters.push(this.criteriaCharacter);
+    }
+  },
+  
+  assembleAllCriteriaCharacters: function(){
+    if (this.criteria === true){
+      allCriteriaCharacters = this.characters.concat(allCriteriaCharacters); 
+    }
+  }
+}
 
-    ** write passwordReturn to #password text box
-*/
+var upper ={
+	criteria : upperChoice,
+	characters : ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+	criteriaCharacter : [],
+
+  increaseCount: function(){
+    if (this.criteria === true){
+      (count++);
+    }
+  },
+  
+  pickCriteriaCharacter: function(){
+    if (this.criteria === true){
+      this.criteriaCharacter = this.characters[Math.floor(Math.random() * this.characters.length)];
+    }
+  },
+  
+  lockInCriteriaCharacter: function(){
+    if (this.criteria === true){
+      lockedCriteriaCharacters.push(this.criteriaCharacter);
+    }
+  },
+  
+  assembleAllCriteriaCharacters: function(){
+    if (this.criteria === true){
+      allCriteriaCharacters = this.characters.concat(allCriteriaCharacters); 
+    }
+  }
+}
+
+var number ={
+	criteria: numberChoice,
+	characters: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+	criteriaCharacter: [],
 
 
+  increaseCount: function(){
+    if (this.criteria === true){
+      (count++);
+    }
+  },
+  
+  pickCriteriaCharacter: function(){
+    if (this.criteria === true){
+      this.criteriaCharacter = this.characters[Math.floor(Math.random() * this.characters.length)];
+    }
+  },
+  
+  lockInCriteriaCharacter: function(){
+    if (this.criteria === true){
+      lockedCriteriaCharacters.push(this.criteriaCharacter);
+    }
+  },
+  
+  assembleAllCriteriaCharacters: function(){
+    if (this.criteria === true){
+      allCriteriaCharacters = this.characters.concat(allCriteriaCharacters); 
+    }
+  }
+}
+
+var special ={
+	criteria: specialChoice,
+	characters: ["!", "#", "$", "%", "&", "'", "", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "`", "{", "|", "}", "~",  "\"" ],
+	criteriaCharacter : [],
+
+  increaseCount: function(){
+    if (this.criteria === true){
+      (count++);
+    }
+  },
+  
+  pickCriteriaCharacter: function(){
+    if (this.criteria === true){
+      this.criteriaCharacter = this.characters[Math.floor(Math.random() * this.characters.length)];
+    }
+  },
+  
+  lockInCriteriaCharacter: function(){
+    if (this.criteria === true){
+      lockedCriteriaCharacters.push(this.criteriaCharacter);
+    }
+  },
+  
+  assembleAllCriteriaCharacters: function(){
+    if (this.criteria === true){
+      allCriteriaCharacters = this.characters.concat(allCriteriaCharacters); 
+    }
+  }
+}
+
+// calls all object functions
+lower.increaseCount();
+lower.pickCriteriaCharacter();
+lower.lockInCriteriaCharacter();
+lower.assembleAllCriteriaCharacters();
+
+upper.increaseCount();
+upper.pickCriteriaCharacter();
+upper.lockInCriteriaCharacter();
+upper.assembleAllCriteriaCharacters();
+
+number.increaseCount();
+number.pickCriteriaCharacter();
+number.lockInCriteriaCharacter();
+number.assembleAllCriteriaCharacters();
+
+special.increaseCount();
+special.pickCriteriaCharacter();
+special.lockInCriteriaCharacter();
+special.assembleAllCriteriaCharacters();
+
+// test outputs
+console.log(length);
+console.log(count);
+console.log(lockedCriteriaCharacters);
+console.log(allCriteriaCharacters);
+
+// //       window.alert("Please chose at least one character type for your " + length + " character password by clicking OK when you see the type(s) of characters you would like included in your password from the pop up boxes to follow.");
 
 
+// /*
+// -------------------------------------------------------------------------
+// ------------------------- TO DO LIST ------------------------
+// -------------------------------------------------------------------------
+// TODO validate criteria choice ::::: at least one affirmative choice required 
+// /*
+// TODO random generation
+//   ** find remainderLength by subtracting count from length 
+//   ** generate remainderLength number of random characters from paramterCharacters array
+  
+//   ** randomly combine initialCharacterReturn and remainderCharacterReturn arrays into passwordReturn
 
+//   ** write passwordReturn to #password text box
+// */
 
 
 // Write password to the #password input
