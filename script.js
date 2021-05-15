@@ -1,12 +1,12 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
+// start code on click
 function generatePassword() {
 // length of password as declared by user in prompt window
 var lengthEntry;
+
 // // while condition runs until a number between 8 - 128 is entered into prompt window
-
-
   while (!(lengthEntry >= 8 && lengthEntry <= 128)){
     lengthEntry = Number(window.prompt("How many characters long would you like your password to be? Please enter a number between 8 and 128.", ""));
   }
@@ -25,10 +25,11 @@ var specialChoice;
 var lockedCriteriaCharacters = [];
 var lockedRemainderCharacters = [];
 var allCriteriaCharacters = [];
-var password = [];
 
+// the number of characters needed after initial characters for each criteria returned
 var remainderLength;
 
+// popup confirmation windows for users to set password character criteria 
 needNumber = window.alert("Please chose at least one character type for your " + lengthEntry + " character password by clicking OK when you see the type(s) of characters you would like included in your password from the pop up boxes to follow.");
 
 lowerChoice = window.confirm("LOWERCASE LETTERS \nWould you like your password to include lowercase letters? \nClick OK to include lower case letters in your password. \nClick Cancel to create a password without lower case letters.");
@@ -39,7 +40,12 @@ numberChoice = window.confirm("NUMBERS \nWould you like your password to include
 
 specialChoice = window.confirm("SPECIAL CHARACTERS \nWould you like your password to include special characters? \nClick OK to include special characters in your password. \nClick Cancel to create a password without special characters.");
 
-// objects created based on password criteria options
+// objects created based on password criteria options with 
+// arrays of characters associated with the criteria 
+// function to increase count of affirmative responses
+// functions to pick an initial character of each type (if selected) and return to lockedCharacter array
+// function to add full array of characters for given criteria to allCharacter array for further character retrieval
+
 var lower ={
   criteria: lowerChoice,
 	characters: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
@@ -163,6 +169,7 @@ var special ={
   }
 }
 
+// calls all functions from objects
 lower.increaseCount();
 lower.pickCriteriaCharacter();
 lower.lockInCriteriaCharacter();
@@ -183,16 +190,16 @@ special.pickCriteriaCharacter();
 special.lockInCriteriaCharacter();
 special.assembleAllCriteriaCharacters();
 
+// calculates how many more characters to generate
 remainderLength = lengthEntry - count;
 
+// generates remaining needed password characters, adds them to lockedRemainderCharacters array, mixes that array with initially returned characters, and saves shuffled lits to passwordOut array
 function randomCharacter() {
       lockedRemainderCharacters = lockedRemainderCharacters.concat(allCriteriaCharacters[Math.floor(Math.random() * allCriteriaCharacters.length)]);
     }
-
 for (let i = 0; i < remainderLength; i++) {
   randomCharacter();
 }
-
 passwordOut = lockedRemainderCharacters.concat(lockedCriteriaCharacters);
 passwordOut.sort(() => Math.random() - 0.5);
 
@@ -206,28 +213,13 @@ console.log(lockedRemainderCharacters);
 console.log(passwordOut);
 }
 
-// writePassword();
-
 // Write password to the #password input
-
-
-
-// /*
-// -------------------------------------------------------------------------
-// ------------------------- TO DO LIST ------------------------
-// -------------------------------------------------------------------------
-// TODO validate criteria choice ::::: at least one affirmative choice required 
-//   ** write passwordReturn to #password text box
-// */
-
-
-// Write password to the #password input
-  function writePassword() {
-  var password = generatePassword();
+function writePassword() {
   var passwordText = document.querySelector("#password");
+  generatePassword();
 
+  // removes commas from output array and writes to screen
   passwordText.value = passwordOut.join('');
-
 }
 
 // Add event listener to generate button
