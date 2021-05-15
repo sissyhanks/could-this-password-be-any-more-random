@@ -10,6 +10,7 @@ var lengthEntry;
   while (!(lengthEntry >= 8 && lengthEntry <= 128)){
     lengthEntry = Number(window.prompt("How many characters long would you like your password to be? Please enter a number between 8 and 128.", ""));
   }
+  
 
 // number of true (affirmative) responses to the criteria confirmation windows
 var count = 0;
@@ -211,6 +212,11 @@ console.log(allCriteriaCharacters);
 console.log(remainderLength);
 console.log(lockedRemainderCharacters);
 console.log(passwordOut);
+
+if (count === 0){
+  window.alert("Please chose at least one character type for your password by clicking OK when you see the type(s) of characters you would like included in your password from the pop up boxes to follow.");
+  return generatePassword();
+}
 }
 
 // Write password to the #password input

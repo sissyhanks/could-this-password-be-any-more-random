@@ -2,7 +2,7 @@
 
 <img src="./images/ScreenShot.png">
 
-[Live Demo](https://sissyhanks.github)
+[Live Demo](https://sissyhanks.github.io/could-this-password-be-any-more-random/)
 
 ## Description
 
