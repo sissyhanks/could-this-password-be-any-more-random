@@ -1,10 +1,13 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
+function generatePassword() {
 // length of password as declared by user in prompt window
 var lengthEntry;
 // // while condition runs until a number between 8 - 128 is entered into prompt window
-while (!(lengthEntry >= 8 && lengthEntry <= 128)){
+
+
+  while (!(lengthEntry >= 8 && lengthEntry <= 128)){
     lengthEntry = Number(window.prompt("How many characters long would you like your password to be? Please enter a number between 8 and 128.", ""));
   }
 
@@ -12,6 +15,7 @@ while (!(lengthEntry >= 8 && lengthEntry <= 128)){
 var count = 0;
 
 // password character type criteria variables to be declared by action confirmation windows
+var needNumber;
 var lowerChoice;
 var upperChoice;
 var numberChoice;
@@ -25,7 +29,7 @@ var password = [];
 
 var remainderLength;
 
-var needNumber = window.alert("Please chose at least one character type for your " + lengthEntry + " character password by clicking OK when you see the type(s) of characters you would like included in your password from the pop up boxes to follow.");
+needNumber = window.alert("Please chose at least one character type for your " + lengthEntry + " character password by clicking OK when you see the type(s) of characters you would like included in your password from the pop up boxes to follow.");
 
 lowerChoice = window.confirm("LOWERCASE LETTERS \nWould you like your password to include lowercase letters? \nClick OK to include lower case letters in your password. \nClick Cancel to create a password without lower case letters.");
 
@@ -101,6 +105,7 @@ var number ={
 	criteria: numberChoice,
 	characters: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
 	criteriaCharacter: [],
+
 
   increaseCount: function(){
     if (this.criteria === true){
@@ -188,8 +193,8 @@ for (let i = 0; i < remainderLength; i++) {
   randomCharacter();
 }
 
-password = lockedRemainderCharacters.concat(lockedCriteriaCharacters);
-password.sort(() => Math.random() - 0.5);
+passwordOut = lockedRemainderCharacters.concat(lockedCriteriaCharacters);
+passwordOut.sort(() => Math.random() - 0.5);
 
 // test outputs
 console.log(lengthEntry);
@@ -198,7 +203,14 @@ console.log(lockedCriteriaCharacters);
 console.log(allCriteriaCharacters);
 console.log(remainderLength);
 console.log(lockedRemainderCharacters);
-console.log(password);
+console.log(passwordOut);
+}
+
+// writePassword();
+
+// Write password to the #password input
+
+
 
 // /*
 // -------------------------------------------------------------------------
@@ -207,11 +219,15 @@ console.log(password);
 // TODO validate criteria choice ::::: at least one affirmative choice required 
 //   ** write passwordReturn to #password text box
 // */
-// Write password to the #password input
 
-function writePassword() {
+
+// Write password to the #password input
+  function writePassword() {
+  var password = generatePassword();
   var passwordText = document.querySelector("#password");
-  passwordText.value = password.join('');
+
+  passwordText.value = passwordOut.join('');
+
 }
 
 // Add event listener to generate button
